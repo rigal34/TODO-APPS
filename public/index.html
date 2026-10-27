@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-
-<head>
- 
-<!DOCTYPE html>
-<html lang="fr">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,36 +8,47 @@
     <meta name="author" content="">
     <title>Application Task</title>
     <link href="css/styles.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="#page-top">TASK</a>
+            <a class="navbar-brand" href="index.html">Task</a>
+            <button class="navbar-toggler text-uppercase fw-bold bg-primary text-white rounded" type="button"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded active" aria-current="page" href="index.html">Accueil</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="tasks.html">Tâches</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="stats.html">Statistiques</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-            <h1 class="masthead-heading text-uppercase mb-0">TASK</h1>
+            <h1 class="masthead-heading text-uppercase mb-0">Task</h1>
         </div>
     </header>
-    <section class="page-section portfolio" id="portfolio">
+    <section class="page-section" id="portfolio">
         <div class="container">
-            <div class="col-lg-6 mx-auto bg-light p-3">
-                <form id="form">
+            <div class="col-lg-6 mx-auto">
+                <form id="form" class="card form-card p-4" novalidate>
                     <div class="form-group">
                         <label for="prenom">Votre prénom</label>
-                        <input type="text" class="form-control my-3" id="prenom" required>
+                        <input type="text" class="form-control my-3" id="prenom" autocomplete="given-name" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Voir la liste des tâches</button>
-                    <div id="sayHello" style="display: none;">Bonjour à toi l'inconnu, merci de renseigner ton prénom</div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Voir la liste des tâches</button>
+                    <div id="sayHello" class="app-message mt-3" role="status" aria-live="polite"></div>
                 </form>
             </div>
         </div>
     </section>
     <div class="copyright py-4 text-center text-white">
-        <div class="container"><small>Copyright &copy; Your Website 2023</small></div>
+        <div class="container"><small>Application Task · 2026</small></div>
     </div>
+    <script src="js/commun.js"></script>
     <script src="js/index.js"></script>
 </body>
 

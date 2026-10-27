@@ -1,0 +1,247 @@
+/* Couleurs et mise en page propres à la to-do list (complète le thème styles.css) */
+
+:root {
+    --task-dark: #2c3e50;
+    --task-green: #1abc9c;
+    --task-green-dark: #117a65;
+    --task-orange: #e67e22;
+    --task-orange-dark: #ba4a00;
+    --task-muted: #5d6d7e;
+}
+
+/* Le pied de page reste collé en bas, même quand la page est courte */
+body {
+    background-color: #f4f7f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body > .page-section {
+    flex: 1 0 auto;
+}
+
+/* Bandeau : un peu moins haut, pour voir les cartes plus vite */
+.masthead {
+    padding-bottom: 4rem;
+}
+
+.page-section {
+    padding-top: 3.5rem;
+    padding-bottom: 4rem;
+}
+
+/* ---------- Formulaires ---------- */
+
+.form-card {
+    border: 0;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(44, 62, 80, 0.08);
+}
+
+.form-card label,
+.form-card .form-title {
+    font-weight: 700;
+    color: var(--task-dark);
+}
+
+.greeting {
+    font-size: 1.25rem;
+    color: var(--task-dark);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* ---------- Messages ---------- */
+
+.app-message {
+    padding: 0.6rem 0.9rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+}
+
+.app-message:empty {
+    display: none;
+}
+
+.app-message.success {
+    background-color: #d1f2e6;
+    color: #0b5345;
+}
+
+.app-message.error {
+    background-color: #fadbd8;
+    color: #922b21;
+}
+
+.app-message.info {
+    background-color: #d6eaf8;
+    color: #1b4f72;
+}
+
+.empty-message {
+    text-align: center;
+    color: var(--task-muted);
+    padding: 2rem 1rem;
+    font-size: 1.1rem;
+}
+
+/* ---------- Cartes des tâches ---------- */
+
+.task-card {
+    border: 0;
+    border-top: 6px solid;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.35rem 1rem rgba(44, 62, 80, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.75rem 1.75rem rgba(44, 62, 80, 0.16);
+}
+
+.task-card.is-pending {
+    background-color: #fff6ea;
+    border-top-color: var(--task-orange);
+}
+
+.task-card.is-done {
+    background-color: #eafaf4;
+    border-top-color: var(--task-green);
+}
+
+.task-card .card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--task-dark);
+}
+
+.task-card.is-done .card-title {
+    color: var(--task-muted);
+}
+
+.task-date {
+    font-size: 0.85rem;
+    color: var(--task-muted);
+    margin-bottom: 0.75rem;
+}
+
+.task-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+/* Carte qui vient d'être ajoutée : elle s'illumine un instant */
+.task-card.is-new {
+    animation: nouvelle-carte 1.8s ease-out;
+}
+
+@keyframes nouvelle-carte {
+    0% { box-shadow: 0 0 0 0 rgba(26, 188, 156, 0.8); }
+    60% { box-shadow: 0 0 0 14px rgba(26, 188, 156, 0); }
+    100% { box-shadow: 0 0.35rem 1rem rgba(44, 62, 80, 0.1); }
+}
+
+/* Page détails : une seule carte, plus large */
+.task-detail {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.task-detail .card-title {
+    font-size: 1.6rem;
+}
+
+.task-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+}
+
+/* ---------- Pastilles : statut et tags ---------- */
+
+.status-badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 0.3em 0.8em;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.status-badge.is-pending {
+    background-color: #fdebd0;
+    color: #7e3a00;
+}
+
+.status-badge.is-done {
+    background-color: #c8f0e1;
+    color: #0b5345;
+}
+
+.tag-badge {
+    display: inline-block;
+    padding: 0.25em 0.75em;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.tag-0 { background-color: #dbeafe; color: #1e40af; }
+.tag-1 { background-color: #dcfce7; color: #166534; }
+.tag-2 { background-color: #ede9fe; color: #5b21b6; }
+.tag-3 { background-color: #fce7f3; color: #9d174d; }
+.tag-4 { background-color: #ffedd5; color: #9a3412; }
+.tag-5 { background-color: #cffafe; color: #155e75; }
+.tag-6 { background-color: #fef9c3; color: #854d0e; }
+.tag-7 { background-color: #e0e7ff; color: #3730a3; }
+
+/* ---------- Statistiques ---------- */
+
+.stat-card {
+    border: 0;
+    border-radius: 0.75rem;
+    color: #fff;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 0.35rem 1rem rgba(44, 62, 80, 0.12);
+}
+
+.stat-card .stat-number {
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.stat-card .stat-label {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+}
+
+.stat-card.total { background-color: var(--task-dark); }
+.stat-card.done { background-color: var(--task-green-dark); }
+.stat-card.pending { background-color: var(--task-orange-dark); }
+
+.stats-summary {
+    text-align: center;
+    font-size: 1.15rem;
+    color: var(--task-dark);
+    margin: 1rem 0 0;
+}
+
+/* Le camembert : taille limitée, centré */
+.chart-box {
+    max-width: 380px;
+    margin: 2rem auto 0;
+    background-color: #fff;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    box-shadow: 0 0.35rem 1rem rgba(44, 62, 80, 0.08);
+}

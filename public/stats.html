@@ -1,19 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Statistiques des Tâches</title>
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
 </head>
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="tasks.html">Retour à la Liste des Tâches</a>
+            <a class="navbar-brand" href="index.html">Task</a>
+            <button class="navbar-toggler text-uppercase fw-bold bg-primary text-white rounded" type="button"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index.html">Accueil</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="tasks.html">Tâches</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded active" aria-current="page" href="stats.html">Statistiques</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-            <h1 class="masthead-heading text-uppercase mb-0">Statistiques des Tâches</h1>
+            <h1 class="masthead-heading text-uppercase mb-0">Statistiques des tâches</h1>
         </div>
     </header>
     <section class="page-section" id="portfolio">
@@ -21,13 +32,16 @@
             <div id="stats-container">
                 <!-- Les statistiques seront affichées ici -->
             </div>
-            <canvas id="tasksChart"></canvas>
+            <div class="chart-box" id="chart-box">
+                <canvas id="tasksChart" aria-label="Camembert des tâches terminées et en cours" role="img"></canvas>
+            </div>
         </div>
     </section>
     <div class="copyright py-4 text-center text-white">
-        <div class="container"><small>Copyright &copy; Your Website 2023</small></div>
+        <div class="container"><small>Application Task · 2026</small></div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="js/commun.js"></script>
     <script src="js/stats.js"></script>
 </body>
 </html>
