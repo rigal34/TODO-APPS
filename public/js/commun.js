@@ -1,7 +1,8 @@
 //! Fonctions partagées par toutes les pages (chargé avant le script de la page)
 
-// Adresse du serveur : un seul endroit à changer si le port change
-const API_URL = 'http://localhost:3000';
+// Adresse du serveur : vide = le même site que la page.
+// Ça marche sur ton PC (localhost:3000) comme en ligne, sans rien changer.
+const API_URL = '';
 
 //! Transforme une date en texte français : "dimanche 26 avril 2015 à 08:01"
 const formatDate = (dateText) => {
