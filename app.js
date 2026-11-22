@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
-const cors = require('cors');
 
 const options = {
     definition: {
@@ -19,9 +18,17 @@ const options = {
 
 const openapiSpecification = swaggerJsdoc(options);
 
+// Les limites qui protègent le serveur : sans elles, n'importe qui pourrait remplir sa mémoire
+const LONGUEUR_TEXTE_MAX = 300;      // caractères dans le texte d'une tâche
+const NOMBRE_TAGS_MAX = 10;          // tags par tâche
+const LONGUEUR_TAG_MAX = 30;         // caractères dans un tag
+const NOMBRE_TACHES_MAX = 200;       // tâches dans la liste
+
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+// Les pages du site viennent du même serveur que l'API : on n'accepte donc pas
+// les commandes envoyées depuis les pages d'un autre site (plus de cors()).
+// Une demande ne peut pas peser plus de 10 Ko.
+app.use(bodyParser.json({ limit: '10kb' }));
 
 // Sert les pages du dossier 'public' (chemin complet, pour la même raison)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -108,7 +115,10 @@ const cleanTags = (tags) => {
     if (!Array.isArray(tags)) {
         return [];
     }
-    return tags.map(tag => String(tag).trim()).filter(tag => tag !== '');
+    return tags
+        .map(tag => String(tag).trim().slice(0, LONGUEUR_TAG_MAX))
+        .filter(tag => tag !== '')
+        .slice(0, NOMBRE_TAGS_MAX);
 };
 
 /**
@@ -187,6 +197,12 @@ app.post('/todos', (req, res) => {
     if (text === '') {
         return res.status(400).json({ message: 'Le texte de la tâche est obligatoire' });
     }
+    if (text.length > LONGUEUR_TEXTE_MAX) {
+        return res.status(400).json({ message: `Le texte de la tâche ne peut pas dépasser ${LONGUEUR_TEXTE_MAX} caractères` });
+    }
+    if (getTodoList().length >= NOMBRE_TACHES_MAX) {
+        return res.status(409).json({ message: `La liste est pleine (${NOMBRE_TACHES_MAX} tâches). Supprime une tâche avant d'en ajouter une.` });
+    }
 
     const newTodo = {
         id: getNextId(),
@@ -262,6 +278,9 @@ app.put('/todos/:id', (req, res) => {
     // On n'accepte que ces trois champs : l'id et la date de création ne bougent jamais
     const changes = {};
     if (typeof req.body.text === 'string' && req.body.text.trim() !== '') {
+        if (req.body.text.trim().length > LONGUEUR_TEXTE_MAX) {
+            return res.status(400).json({ message: `Le texte de la tâche ne peut pas dépasser ${LONGUEUR_TEXTE_MAX} caractères` });
+        }
         changes.text = req.body.text.trim();
     }
     if (Array.isArray(req.body.Tags)) {
@@ -289,7 +308,19 @@ app.delete('/todos/:id', (req, res) => {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
+// Une demande trop lourde ou mal écrite reçoit une réponse courte, sans détail technique
+app.use((erreur, req, res, next) => {
+    if (erreur && erreur.type === 'entity.too.large') {
+        return res.status(413).json({ message: 'La demande est trop lourde' });
+    }
+    if (erreur instanceof SyntaxError) {
+        return res.status(400).json({ message: 'La demande est mal écrite' });
+    }
+    next(erreur);
+});
+
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+// Le programme n'écoute que sur l'ordinateur lui-même : c'est nginx, ou ton navigateur en local, qui lui parle
+app.listen(port, '127.0.0.1', () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

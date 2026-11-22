@@ -103,10 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteButton.classList.add('btn', 'btn-outline-danger');
         deleteButton.textContent = 'Supprimer';
         deleteButton.addEventListener('click', () => {
-            const confirmation = confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');
-            if (confirmation) {
-                deleteTask(task, card, messageElement);
-            }
+            deleteTask(task, card, messageElement);
         });
 
         const backLink = document.createElement('a');

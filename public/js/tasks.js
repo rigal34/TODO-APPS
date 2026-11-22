@@ -93,6 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
+                // Le serveur explique son refus (texte trop long, liste pleine…) : on montre son message
+                const refus = await response.json().catch(() => null);
+                if (refus && refus.message) {
+                    showFormMessage(refus.message, 'error');
+                    return;
+                }
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
